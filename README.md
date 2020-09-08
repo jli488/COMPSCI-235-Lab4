@@ -65,3 +65,18 @@
 
 - The above code register the `people_bluprint` in the `app` object
 
+### Task6 - Implement the view method `list_people()`
+
+- In the view method of `list_people()` under `people` blueprint, added `render_template` for `list_people.html` page
+
+  ```python
+  @people_blueprint.route('/list')
+  def list_people():
+      return render_template(
+          'list_people.html',
+          people=repo.repo_instance,
+          find_person_url=url_for('people_bp.find_person'),
+          list_people_url=url_for('people_bp.list_people')
+      )
+  ```
+
