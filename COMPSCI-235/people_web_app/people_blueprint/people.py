@@ -36,4 +36,20 @@ def list_people():
 
 @people_blueprint.route('/find', methods=['GET', 'POST'])
 def find_person():
-    pass
+    form = SearchForm()
+    if form.validate_on_submit():
+        person_id = form.person_id.data
+        person = repo.repo_instance.get_person(person_id)
+        return render_template(
+            'list_person.html',
+            person=person,
+            list_people_url=url_for('people_bp.list_people'),
+            find_person_url=url_for('people_bp.find_person')
+        )
+    else:
+        return render_template(
+            'find_person.html',
+            form=form,
+            list_people_url=url_for('people_bp.list_people'),
+            find_person_url=url_for('people_bp.find_person')
+        )

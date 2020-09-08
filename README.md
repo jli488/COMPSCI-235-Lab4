@@ -94,3 +94,57 @@
       person_id = IntegerField(label='Person ID', validators=[DataRequired(message='Person ID is required')])
       submit = SubmitField(label='Submit')
   ```
+
+### Task9 - Construct a template for search form
+
+- Generate the template for `find_person` as below:
+
+  ```jinja2
+  {% extends 'layout.html' %}
+  
+  {% block content %}
+  
+  <main>
+      <div>
+          <form method="POST" action="{{ handler_url }}">
+              {{ form.csrf_token }}
+              <div>
+                  {{ form.person_id.label }} {{ form.person_id }}
+              </div>
+              {{ form.submit }}
+          </form>
+      </div>
+  </main>
+  
+  {% endblock %}
+  ```
+
+
+
+### Task10 - Implement `find_person()` method
+
+- Firstly need to instantiate a form object: `form = SearchForm()`
+
+- In case of a `GET` request or validation failed, we return the form as below:
+
+  ```python
+  return render_template(
+      'find_person.html',
+      form=form,
+      list_people_url=url_for('people_bp.list_people'),
+      find_person_url=url_for('people_bp.find_person')
+  )
+  ```
+
+- If the validation succeeded, it means it was a `POST` request and the validation is successful, then we search the people and render the template as below:
+
+  ```python
+  person_id = form.person_id.data
+  person = repo.repo_instance.get_person(person_id)
+  return render_template(
+      'list_person.html',
+      person=person,
+      list_people_url=url_for('people_bp.list_people'),
+      find_person_url=url_for('people_bp.find_person')
+  )
+  ```
