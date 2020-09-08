@@ -80,3 +80,17 @@
       )
   ```
 
+### Task7 - Prepare to use WTForms
+
+- Add `WTF_CSRF_SECRET_KEY` into the `.env` file under the root directory
+
+### Task8 - Make a WTForm class
+
+- `SearchForm` inherits from `FlaskForm`
+- Two arguments for `IntegerField` are `label` and `validators`
+- Place below code in `person.py`
+  ```python
+  class SearchForm(FlaskForm):
+      person_id = IntegerField(label='Person ID', validators=[DataRequired(message='Person ID is required')])
+      submit = SubmitField(label='Submit')
+  ```

@@ -10,6 +10,11 @@ people_blueprint = Blueprint(
 )
 
 
+class SearchForm(FlaskForm):
+    person_id = IntegerField(label='Person ID', validators=[DataRequired(message='Person ID is required')])
+    submit = SubmitField(label='Submit')
+
+
 @people_blueprint.route('/')
 def home():
     return render_template(
